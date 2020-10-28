@@ -2,8 +2,6 @@ import streamlit as st
 import helpers
 from show_pages import show_ad_budget, show_welcome_page, pag2,pag3,pag4
 
-st.set_option('deprecation.showImageFormat', False)
-
 # Security
 #passlib,hashlib,bcrypt,scrypt
 import hashlib
