@@ -97,15 +97,12 @@ def show_ad_budget():
     st.markdown("Il diagramma aiuta a concettualizzare i flussi: input, key factors, relazioni e risultati")
 
     st.markdown("Questi sono gli step fondamentali per creare l'Influence Diagram: ")
-    st.markdown("1. Define a **quantitative objective** \n"
-                "2. Identify the **controllable inputs** that are deterministic or with uncertainty \n"
-                "3. Map out the **key factors** and relationships from inputs to output \n"
-                "4. Identify the **non-trivial relationships** (e.g. f(x): advertising budget to unit sold) \n"
-                "5. Get some **past data** to represent the factors and approximate the relationships; "
-                "make sensible **assumptions** "
-                "if needed (once you grasp the Monte Carlo concept, this step is arguably the most important. "
-                "Garbage data & assumptions, garbage outcome.)")
-    
+    st.markdown("1. Definire un **obbiettivo quantitativo** \n"
+                "2. Identificare le **controllable inputs** che sono deterministiche \n"
+                "3. Mappare tutte le **key factors** e tutte le relzioni tra input ed output \n"
+                "4. Identificare le **relazioni complesse presenti** (e.g. f(x): advertising budget ed unità vendute) \n"
+                "5. Utilizzare **dati storici** per rappresentare i fattori ed approssimare le relazioni; ")
+
     image = Image.open('./image/Influence-Diagram-Ad-Budget.png')
     st.image(image, caption='Influence Diagram of Ad Budget Problem', format='PNG',
              use_column_width=True)
