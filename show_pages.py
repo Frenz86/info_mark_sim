@@ -77,6 +77,38 @@ def show_welcome_page():
     st.markdown("***")
 
 
+def ad_calc_profit(price_item, cost_item, ad_budget,sales_expense):
+
+    profit_item = []
+    break_even_cnt = 0
+
+    # Calculate profit for each case
+    for i in range(len(price_item)):
+
+        # Get all key factors
+        unit_price = price_item[i]
+        unit_cost = cost_item[i]
+        #sales_expense = 37000
+        conversion_rate = 0.7
+        unit_sold = ad_budget*1000*conversion_rate
+
+        # Calculate total profit
+        profit = unit_sold * (unit_price - unit_cost) - sales_expense
+        print("------")
+        print(f"unit sold: {unit_sold}")
+        print(unit_price, unit_cost, profit)
+
+        profit_item.append(profit)
+
+        if profit >= 0.0:
+            break_even_cnt += 1
+
+    # Calculate probability of break-even
+    prob_profit = break_even_cnt / len(profit_item)
+
+    return profit_item, prob_profit
+
+
 
 def show_ad_budget():
 
@@ -127,15 +159,22 @@ def show_ad_budget():
                           min_value=10,
                           step=1)
 
-    st.markdown("Ora decidiamo quante simulazioni (e.g. _campagne_ marketing) vogliamo lanciare. "
-                "In generale, più esperimenti lanciamo, più l'errore si ridurrà. Ma ricordiamo che aumentanfo troppo "
-                "il numero degli esperimenti, i tempi di calcolo aumenteranno proporzionalmente.")
+    sales_expense = st.slider(label="Impostare il costo totale delle vendite",
+                        max_value=60000,
+                        min_value=10000,
+                        value=37000,
+                        step=1000)
+    st.markdown("Questo rappresenta il risultato delle 5000 simulazioni ")
+                #(e.g. _campagne_ marketing) vogliamo lanciare. "
+                #"In generale, più esperimenti lanciamo, più l'errore si ridurrà. Ma ricordiamo che aumentanfo troppo "
+                #"il numero degli esperimenti, i tempi di calcolo aumenteranno proporzionalmente.")
 
-    N = st.slider(label="Number of experiment",
-                          max_value=10000,
-                          min_value=2500,
-                          value=5000,
-                          step=1000)
+    N =5000
+    #N = st.slider(label="Number of experiment",
+    #                      max_value=10000,
+    #                      min_value=2500,
+    #                      value=5000,
+    #                      step=1000)
 
     price_item, cost_item = helpers.get_items_ad_triangular(unit_price, unit_cost, N)
     hist_data = [price_item, cost_item]
@@ -157,10 +196,12 @@ def show_ad_budget():
     st.markdown("** OUTCOME **")
     st.markdown(f"Questo è l'andamento finale con **{N} simulazioni** ed un Advertising budget di **€{ad_budget*1000}** "
                 f"per un  prezzo medio unitario di **€{unit_price}** e costi unitari di **€{unit_cost}**.")
+    
+
     # Analysis
     st.markdown("** ANALISI **")
     st.markdown("Riportiamo sotto alcuni resoconti: ")
-    profit_item, prob_profit = helpers.ad_calc_profit(price_item, cost_item, ad_budget)
+    profit_item, prob_profit = ad_calc_profit(price_item, cost_item, ad_budget,sales_expense)
     st.markdown(f"Utile medio: **€{sum(profit_item) / len(profit_item): .2f}**")
     st.markdown(f"Probabilità di break-even (ovvero per generare profitto positivo): **{prob_profit*100: .2f}%**")
 
